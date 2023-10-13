@@ -1,0 +1,111 @@
+<style>
+  #image-1, #image-2 {
+    background-color: #c4c4c4;
+    width: 327px;
+    height: 347px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+    /* overflow-x: scroll; */
+    padding: 10px;
+  }
+
+  .node-comparing-plugin {
+    font-size: 20px;
+  }
+
+  .parent {
+    background-color: #d5deff;
+    overflow: hidden;
+    text-align: left;
+    font-size: 12px;
+    color: #000;
+    font-family: Inter;
+    overflow-y: hidden;
+    height: fit-content;
+    margin: 0;
+    padding: 23px;
+  }
+
+  .node-1, .node-2 {
+    margin: 10px;
+  }
+
+  .sub-parent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+
+  #node1-content,#node2-content{
+    display: none;
+    overflow-y: scroll;
+    background-color: white;
+    padding: 10px;
+    width: 327px;
+    height: 347px;
+  }
+</style>
+
+<div class="parent">
+  <b class="node-comparing-plugin">Node Comparing Plugin </b>
+
+  <div class="sub-parent">
+      <div class="node-1" >
+        <div class="node-1-text">Node 1</div>
+        <div id="node1-content"></div>
+        <div id="image-1">
+          <p class="select-node-1">Select Node 1 first</p>
+        </div>
+      </div>
+      <div class="node-2">
+        <div class="node-2-text">Node 2</div>
+        <div id="node2-content"></div>
+        <div id="image-2">
+          <p id="select-node-2">Select Node 1 first</p>
+        </div>
+      </div>
+  </div>
+  <button id="reset">Reset</button>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@textea/json-viewer@3" ></script>
+<script>
+  let node1 = false, node2 = false;
+  let nodeIds =[];
+
+  document.getElementById('reset').onclick = () => {
+    node1 = false, node2 = false;
+    document.getElementById("image-1").style.display = "flex";
+    document.getElementById("image-2").style.display = "flex";
+    document.getElementById("node1-content").style.display = "none";
+    document.getElementById("node2-content").style.display = "none";
+  }
+
+  onmessage = (event) => {
+    console.log("got this from the plugin code", event.data.pluginMessage)
+
+    // if(!nodeIds.includes())
+    if(true && (!node1 || !node2)){
+    if(!node1){
+        new JsonViewer({
+          value: event.data.pluginMessage
+        }).render('#node1-content');
+        node1 = true;
+        document.getElementById('select-node-2').textContent = "Now select Node 2"; 
+        document.getElementById("image-1").style.display = "none";
+        document.getElementById("node1-content").style.display = "block";
+    } else if(!node2){
+        new JsonViewer({
+          value: event.data.pluginMessage
+        }).render('#node2-content');
+        document.getElementById("image-2").style.display = "none";
+        document.getElementById("node2-content").style.display = "block";
+        node2 = true;
+    }
+    }
+  }
+</script>

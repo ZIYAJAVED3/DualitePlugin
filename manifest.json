@@ -1,0 +1,18 @@
+{
+  "name": "DualitePlugin",
+  "id": "1294536234137896503",
+  "api": "1.0.0",
+  "main": "code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "editorType": [
+    "figma",
+    "figjam"
+  ],
+  "ui": "ui.html",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://cdn.jsdelivr.net/"
+    ]
+  }
+}
